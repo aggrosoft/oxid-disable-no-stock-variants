@@ -27,10 +27,10 @@ class VariantHandler extends VariantHandler_parent {
         foreach ($aSelections as $sVariantId => &$aLineSelections) {
             $aNames = [];
             $blParentActive = false;
-            $blParentDefined = false;
             foreach ($aLineSelections as $iKey => &$aLineVariant) {
                 $aNames[] = $aLineVariant['name'];
-                $aParentLine = $iKey > 0 ? $aLineSelections[$iKey-1] : null;
+                $blCurrentActive = !!$aFilter[$iKey];
+                $blChildActive = !!$aFilter[$iKey+1];
 
                 if ($blParentActive) {
                     $aStock = $this->getDotArray($this->_aVariantStocks, implode('.', $aNames));
@@ -38,16 +38,16 @@ class VariantHandler extends VariantHandler_parent {
                         $aLineVariant['disabled'] = true;
                         $aLineVariant['active'] = false;
                     }
-                } elseif (!$blParentDefined && $aParentLine) {
-                    $aStock = $this->getDotArray($this->_aVariantStocks, implode('.', $aNames));
-                    if (!is_array($aStock) && $aStock <= 0) {
-                        $aLineSelections[$iKey-1]['disabled'] = true;
-                        $aLineSelections[$iKey-1]['active'] = false;
+                } elseif (!$blCurrentActive && $blChildActive) {
+                    $aChildLine = $aLineSelections[$iKey+1];
+                    $aChildStock = $this->getDotArray($this->_aVariantStocks, implode('.', $aNames) . '.' . $aChildLine['name']);
+                    if (!is_array($aChildStock) && $aChildStock <= 0) {
+                        $aLineVariant['disabled'] = true;
+                        $aLineVariant['active'] = false;
                     }
                 }
 
                 $blParentActive = in_array($aLineVariant['hash'], $aFilter);
-                $blParentDefined = isset($aFilter[$iKey]);
             }
         }
 
