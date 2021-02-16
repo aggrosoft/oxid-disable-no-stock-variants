@@ -19,7 +19,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Aggrosoft\\Adcell\\": "../../../source/modules/agdisablenostockvariants"
+      "Aggrosoft\\DisableNoStockVariants\\": "../../../source/modules/agdisablenostockvariants"
     }
   },
   "version": "1.0.1-beta.1"
