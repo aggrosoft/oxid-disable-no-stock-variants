@@ -13,6 +13,6 @@ $aModule = array(
     'version'      => '1.0.1-beta.0',
     'author'       => 'Aggrosoft GmbH',
     'extend'      => [
-        \OxidEsales\Eshop\Model\VariantHandler::class => \Aggrosoft\DisableNoStockVariants\Application\Model\VariantHandler::class
+        \OxidEsales\Eshop\Application\Model\VariantHandler::class => \Aggrosoft\DisableNoStockVariants\Application\Model\VariantHandler::class
     ]
 );
