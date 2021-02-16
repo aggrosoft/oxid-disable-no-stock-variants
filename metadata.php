@@ -10,7 +10,7 @@ $aModule = array(
         'en' => 'Disable not on stock multidimensional variants'
     ],
     'thumbnail'    => '',
-    'version'      => '1.0.0',
+    'version'      => '1.0.1-beta.0',
     'author'       => 'Aggrosoft GmbH',
     'extend'      => [
         \OxidEsales\Eshop\Model\VariantHandler::class => \Aggrosoft\DisableNoStockVariants\Application\Model\VariantHandler::class
