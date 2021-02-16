@@ -29,19 +29,34 @@ class VariantHandler extends VariantHandler_parent {
             $blParentActive = false;
             foreach ($aLineSelections as $iKey => &$aLineVariant) {
                 $aNames[] = $aLineVariant['name'];
-                $blCurrentActive = !!$aFilter[$iKey];
                 $blChildActive = !!$aFilter[$iKey+1];
 
+                // Disable children if parent is active and child has no stock
                 if ($blParentActive) {
                     $aStock = $this->getDotArray($this->_aVariantStocks, implode('.', $aNames));
                     if (!is_array($aStock) && $aStock <= 0) {
                         $aLineVariant['disabled'] = true;
                         $aLineVariant['active'] = false;
                     }
-                } elseif (!$blCurrentActive && $blChildActive) {
+                } elseif ($blChildActive) {
+                    // Disable parents if child is active and possible child has no stock
                     $aChildLine = $aLineSelections[$iKey+1];
                     $aChildStock = $this->getDotArray($this->_aVariantStocks, implode('.', $aNames) . '.' . $aChildLine['name']);
                     if (!is_array($aChildStock) && $aChildStock <= 0) {
+                        $aLineVariant['disabled'] = true;
+                        $aLineVariant['active'] = false;
+                    }
+                } elseif (isset($aLineSelections[$iKey+1])) {
+                    // Disable parent if no child has stock at all
+                    $aChildStocks = $this->getDotArray($this->_aVariantStocks, implode('.', $aNames), 0);
+                    $blHasStock = false;
+                    foreach($aChildStocks as $iStock) {
+                        if ($iStock > 0) {
+                            $blHasStock = true;
+                            break;
+                        }
+                    }
+                    if (!$blHasStock) {
                         $aLineVariant['disabled'] = true;
                         $aLineVariant['active'] = false;
                     }
@@ -94,7 +109,7 @@ class VariantHandler extends VariantHandler_parent {
 
         foreach (explode('.', $key) as $segment) {
             if (!is_array($array) || !array_key_exists($segment, $array)) {
-                return value($default);
+                return $default;
             }
 
             $array = $array[$segment];
