@@ -60,6 +60,14 @@ class VariantHandler extends VariantHandler_parent {
                         $aLineVariant['disabled'] = true;
                         $aLineVariant['active'] = false;
                     }
+                } else {
+                    // Single level variant without stock
+                    // @TODO: this is a code duplicate, should optimize this
+                    $aStock = $this->getDotArray($this->_aVariantStocks, implode('.', $aNames));
+                    if (!is_array($aStock) && $aStock <= 0) {
+                        $aLineVariant['disabled'] = true;
+                        $aLineVariant['active'] = false;
+                    }
                 }
 
                 $blParentActive = in_array($aLineVariant['hash'], $aFilter);
