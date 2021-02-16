@@ -1,0 +1,49 @@
+{
+  "name": "oxid-agadcell",
+  "version": "1.0.2",
+  "private": true,
+  "scripts": {
+    "release": "dotenv release-it",
+    "test-release": "dotenv release-it -- --dry-run",
+    "release-alpha": "dotenv release-it -- --preRelease=alpha",
+    "release-beta": "dotenv release-it -- --preRelease=beta"
+  },
+  "devDependencies": {
+    "release-it": "^14.0.3",
+    "@release-it/bumper": "^2.0.0",
+    "auto-changelog": "^2.2.1",
+    "dotenv-cli": "^4.0.0"
+  },
+  "release-it": {
+    "git": {
+      "tagName": "${version}",
+      "commitMessage": "chore: release v${version}"
+    },
+    "github": {
+      "release": true
+    },
+    "npm": {
+      "publish": false
+    },
+    "hooks": {
+      "after:bump": "npx auto-changelog -p --commit-url {id} --issue-url {id} --merge-url {id} --compare-url {from}/{to}",
+      "after:release": [
+        "echo Successfully released ${name} v${version} to ${repo.repository}."
+      ]
+    },
+    "plugins": {
+      "@release-it/bumper": {
+        "out": [
+          {
+            "file": "metadata.php",
+            "type": "text/php"
+          },
+          {
+            "file": "composer.json",
+            "type": "application/json"
+          }
+        ]
+      }
+    }
+  }
+}

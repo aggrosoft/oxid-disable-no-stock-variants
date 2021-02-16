@@ -1,0 +1,26 @@
+{
+  "name": "aggrosoft/oxid-disable-no-stock-variants",
+  "type": "oxideshop-module",
+  "description": "Disable not on stock multidimensional variants",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexander Kludt",
+      "homepage": "https://github.com/aggrosoft"
+    }
+  ],
+  "require": {
+    "php": ">=7.0"
+  },
+  "extra": {
+    "oxideshop": {
+      "target-directory": "agdisablenostockvariants"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Aggrosoft\\Adcell\\": "../../../source/modules/agdisablenostockvariants"
+    }
+  },
+  "version": "1.0.2"
+}
