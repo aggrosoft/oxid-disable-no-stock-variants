@@ -13,7 +13,7 @@ class VariantHandler extends VariantHandler_parent {
         // filling selections
         foreach ($oVariantList as $oVariant) {
             $aNames = $this->_getSelections($oVariant->oxarticles__oxvarselect->getRawValue());
-            $this->setDotArray($this->_aVariantStocks, implode('.', $aNames), $oVariant->oxarticles__oxstock->value);
+            $this->setDotArray($this->_aVariantStocks, implode('.', $aNames), $oVariant->oxarticles__oxstockflag->value == 4 ? 999999 : $oVariant->oxarticles__oxstock->value);
         }
 
         return parent::_fillVariantSelections($oVariantList, $iVarSelCnt, $aFilter, $sActVariantId);
