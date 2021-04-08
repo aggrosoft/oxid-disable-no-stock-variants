@@ -13,7 +13,7 @@ class VariantHandler extends VariantHandler_parent {
         // filling selections
         foreach ($oVariantList as $oVariant) {
             $aNames = $this->_getSelections($oVariant->oxarticles__oxvarselect->getRawValue());
-            $this->setDotArray($this->_aVariantStocks, implode('.', $aNames), $oVariant->oxarticles__oxstockflag->value == 4 ? 999999 : $oVariant->oxarticles__oxstock->value);
+            $this->setDotArray($this->_aVariantStocks, trim(implode('.', $aNames)), $oVariant->oxarticles__oxstockflag->value == 4 ? 999999 : $oVariant->oxarticles__oxstock->value);
         }
 
         return parent::_fillVariantSelections($oVariantList, $iVarSelCnt, $aFilter, $sActVariantId);
@@ -61,8 +61,6 @@ class VariantHandler extends VariantHandler_parent {
                         $aLineVariant['active'] = false;
                     }
                 } else {
-                    // Single level variant without stock
-                    // @TODO: this is a code duplicate, should optimize this
                     $aStock = $this->getDotArray($this->_aVariantStocks, implode('.', $aNames));
                     if (!is_array($aStock) && $aStock <= 0) {
                         $aLineVariant['disabled'] = true;
