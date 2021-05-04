@@ -36,7 +36,6 @@ class VariantHandler extends VariantHandler_parent {
                     $aStock = $this->getDotArray($this->_aVariantStocks, implode('.', $aNames));
                     if (!is_array($aStock) && $aStock <= 0) {
                         $aLineVariant['disabled'] = true;
-                        $aLineVariant['active'] = false;
                     }
                 } elseif ($blChildActive) {
                     // Disable parents if child is active and possible child has no stock
@@ -44,7 +43,6 @@ class VariantHandler extends VariantHandler_parent {
                     $aChildStock = $this->getDotArray($this->_aVariantStocks, implode('.', $aNames) . '.' . $aChildLine['name']);
                     if (!is_array($aChildStock) && $aChildStock <= 0) {
                         $aLineVariant['disabled'] = true;
-                        $aLineVariant['active'] = false;
                     }
                 } elseif (isset($aLineSelections[$iKey+1])) {
                     // Disable parent if no child has stock at all
@@ -58,13 +56,11 @@ class VariantHandler extends VariantHandler_parent {
                     }
                     if (!$blHasStock) {
                         $aLineVariant['disabled'] = true;
-                        $aLineVariant['active'] = false;
                     }
                 } else {
                     $aStock = $this->getDotArray($this->_aVariantStocks, implode('.', $aNames));
                     if (!is_array($aStock) && $aStock <= 0) {
                         $aLineVariant['disabled'] = true;
-                        $aLineVariant['active'] = false;
                     }
                 }
 
